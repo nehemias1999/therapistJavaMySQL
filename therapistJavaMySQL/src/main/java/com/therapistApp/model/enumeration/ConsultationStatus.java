@@ -1,4 +1,4 @@
-package com.therapistApp.model.entity;
+package com.therapistApp.model.enumeration;
 
 public enum ConsultationStatus {
 	SCHEDULED,

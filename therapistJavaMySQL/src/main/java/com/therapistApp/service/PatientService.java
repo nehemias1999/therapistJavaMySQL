@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import therapist_desktopJavaApp.exception.ValidationException;
-import therapist_desktopJavaApp.model.dao.PatientDAO;
-import therapist_desktopJavaApp.model.dto.in.PatientDTOIN;
-import therapist_desktopJavaApp.model.entity.Patient;
+import com.therapistApp.exception.ValidationException;
+import com.therapistApp.model.dao.PatientDAO;
+import com.therapistApp.model.dto.PatientDTO;
+import com.therapistApp.model.entity.Patient;
 
 public class PatientService {
 	private PatientDAO patientDAO;
@@ -18,25 +18,25 @@ public class PatientService {
 		this.patientDAO = new PatientDAO();
 	}
     
-	public List<PatientDTOIN> getAllPatients() {
+	public List<PatientDTO> getAllPatients() {
         return patientDAO.getAllPatients().stream()
-    			.map(p -> new PatientDTOIN(
+    			.map(p -> new PatientDTO(
     					p.getPatientId().toString(), 
     					p.getPatientDNI(), 
     					p.getPatientName(), 
     					p.getPatientLastName(), 
-    					p.getPatientBirthDate().toString(), 
+    					p.getPatientBirthDate().toString(),
+						p.getPatientPhone(),
+						p.getPatientEmail(),
+						p.getCityId().toString(),
     					p.getPatientAddress(), 
     					String.valueOf(p.getPatientAddressNumber()), 
     					String.valueOf(p.getPatientAddressFloor()), 
-    					p.getPatientAddressApartment(), 
-    					p.getCountryId().toString(), 
-    					p.getProvinceId().toString(), 
-    					p.getCityId().toString()))
-    			.collect(Collectors.toList());
+    					p.getPatientAddressApartment()
+				)).collect(Collectors.toList());
     }
 
-	public void insertPatient(PatientDTOIN patientDTO) throws SQLException, ValidationException {
+	public void insertPatient(PatientDTO patientDTO) throws SQLException, ValidationException {
 		
 		UUID patientId = UUID.randomUUID();
 	
@@ -57,13 +57,17 @@ public class PatientService {
         } else {
         	patientBirthDate = LocalDate.parse(patientDTO.getPatientDTOBirthDate());
         }
-		
+
+		String patientPhone = patientDTO.getPatientDTOPhone().toLowerCase();
+
 		String patientEmail = "";
 		if (patientDAO.isPatientEmailExists(patientDTO.getPatientDTOEmail())) {
 			throw new ValidationException("Ya existe un paciente con Email " + patientDTO.getPatientDTOEmail());
 		} else {
 			patientEmail = patientDTO.getPatientDTOEmail().toLowerCase();
 		}
+
+		UUID cityId = UUID.fromString(patientDTO.getCityId());
 		
 		String patientAddress = patientDTO.getPatientDTOAddress().toLowerCase();
 		
@@ -76,28 +80,27 @@ public class PatientService {
 			patientAddressFloor = 0;
 		}
 		
-		String patientAddressApartment = patientDTO.getPatientDTOAddressApartment().toLowerCase();
-		
-		UUID countryId = UUID.fromString(patientDTO.getCountryId());
-		
-		UUID provinceId = UUID.fromString(patientDTO.getProvinceId());
-		
-		UUID cityId = UUID.fromString(patientDTO.getCityId());
-		
+		String patientAddressApartment;
+		if (!patientDTO.getPatientDTOAddressApartment().isEmpty()) {
+			patientAddressApartment = "";
+		} else {
+			patientAddressApartment = patientDTO.getPatientDTOAddressApartment().toLowerCase();
+		}
+
 		patientDAO.insertPatient(new Patient(
 				patientId, 
 				patientDNI, 
 				patientName, 
 				patientLastName, 
-				patientBirthDate, 
-				patientEmail, 
+				patientBirthDate,
+				patientPhone,
+				patientEmail,
+				cityId,
 				patientAddress, 
 				patientAddressNumber, 
 				patientAddressFloor, 
-				patientAddressApartment, 
-				countryId, 
-				provinceId, 
-				cityId));
+				patientAddressApartment
+		));
 		
     }
 	

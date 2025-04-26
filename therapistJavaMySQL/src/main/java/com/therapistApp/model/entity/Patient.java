@@ -9,42 +9,39 @@ public class Patient {
     private String patientName;
     private String patientLastName;
     private LocalDate patientBirthDate;
+	private String patientPhone;
     private String patientEmail;
+	private UUID cityId;
     private String patientAddress;
     private int patientAddressNumber;
     private int patientAddressFloor;
     private String patientAddressApartment;
-    private UUID countryId;
-    private UUID provinceId;
-    private UUID cityId;
     
 	public Patient(
 			UUID patientId, 
 			String patientDNI, 
 			String patientName, 
 			String patientLastName,
-			LocalDate patientBirthDate, 
-			String patientEmail, 
+			LocalDate patientBirthDate,
+			String patientPhone,
+			String patientEmail,
+			UUID cityId,
 			String patientAddress, 
 			int patientAddressNumber,
 			int patientAddressFloor, 
-			String patientAddressApartment, 
-			UUID countryId, 
-			UUID provinceId, 
-			UUID cityId) {
+			String patientAddressApartment) {
 		this.patientId = patientId;
 		this.patientDNI = patientDNI;
 		this.patientName = patientName;
 		this.patientLastName = patientLastName;
 		this.patientBirthDate = patientBirthDate;
+		this.patientPhone = patientPhone;
 		this.patientEmail = patientEmail;
+		this.cityId = cityId;
 		this.patientAddress = patientAddress;
 		this.patientAddressNumber = patientAddressNumber;
 		this.patientAddressFloor = patientAddressFloor;
 		this.patientAddressApartment = patientAddressApartment;
-		this.countryId = countryId;
-		this.provinceId = provinceId;
-		this.cityId = cityId;
 	}
 	
 	public UUID getPatientId() {
@@ -86,13 +83,29 @@ public class Patient {
 	public void setPatientBirthDate(LocalDate patientBirthDate) {
 		this.patientBirthDate = patientBirthDate;
 	}
-	
+
+	public String getPatientPhone() {
+		return patientPhone;
+	}
+
+	public void setPatientPhone(String patientPhone) {
+		this.patientPhone = patientPhone;
+	}
+
 	public String getPatientEmail() {
 		return patientEmail;
 	}
 	
 	public void setPatientEmail(String patientEmail) {
 		this.patientEmail = patientEmail;
+	}
+
+	public UUID getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(UUID cityId) {
+		this.cityId = cityId;
 	}
 	
 	public String getPatientAddress() {
@@ -125,30 +138,6 @@ public class Patient {
 	
 	public void setPatientAddressApartment(String patientAddressApartment) {
 		this.patientAddressApartment = patientAddressApartment;
-	}
-	
-	public UUID getCountryId() {
-		return countryId;
-	}
-	
-	public void setCountryId(UUID countryId) {
-		this.countryId = countryId;
-	}
-	
-	public UUID getProvinceId() {
-		return provinceId;
-	}
-	
-	public void setProvinceId(UUID provinceId) {
-		this.provinceId = provinceId;
-	}
-	
-	public UUID getCityId() {
-		return cityId;
-	}
-	
-	public void setCityId(UUID cityId) {
-		this.cityId = cityId;
 	}
 
 }
