@@ -1,0 +1,41 @@
+
+CREATE TABLE IF NOT EXISTS tbl_patient (
+  patient_id CHAR(36) NOT NULL PRIMARY KEY DEFAULT (UUID()),
+  patient_dni CHAR(8) NOT NULL,
+  patient_name VARCHAR(50) NOT NULL,
+  patient_last_name VARCHAR(50) NOT NULL,
+  patient_birth_date DATE NOT NULL,
+  patient_phone VARCHAR(15) NOT NULL,
+  patient_email VARCHAR(100) NOT NULL,
+  patient_address VARCHAR(100) NOT NULL,
+  patient_address_number INT NOT NULL,
+  patient_address_floor SMALLINT NULL,
+  patient_address_department VARCHAR(10) NULL,
+  country_id CHAR(36) NOT NULL,
+  province_id CHAR(36) NOT NULL,
+  city_id CHAR(36) NOT NULL,
+  UNIQUE KEY uk_patient_dni (patient_dni),
+  UNIQUE KEY uk_patient_email (patient_email)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+  
+CREATE TABLE IF NOT EXISTS tbl_consultation (
+  consultation_id CHAR(36) NOT NULL DEFAULT (UUID()),
+  patient_id CHAR(36) NOT NULL,
+  start_datetime DATETIME NOT NULL,
+  end_datetime DATETIME NULL,
+  consultation_status ENUM('SCHEDULED','COMPLETED','CANCELLED') NOT NULL DEFAULT 'SCHEDULED',
+  consultation_note_path VARCHAR(100) NULL,
+  consultation_amount DOUBLE PRECISION NOT NULL,
+  consultation_amount_status BOOLEAN NOT NULL DEFAULT TRUE,
+  PRIMARY KEY (consultation_id, patient_id, start_datetime),
+  FOREIGN KEY (patient_id)
+    REFERENCES tbl_patient(patient_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+) ENGINE=InnoDB 
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+CREATE INDEX idx_consultation_start ON tbl_consultation(consultation_id, patient_id, start_datetime);  
