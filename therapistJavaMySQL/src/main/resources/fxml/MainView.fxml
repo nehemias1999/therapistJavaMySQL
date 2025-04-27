@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.therapistApp.controller.MainViewController">
+
+    <!-- Menú superior -->
+    <top>
+        <fx:include source="/com/therapistApp/view/panel/TopMenu.fxml" />
+    </top>
+
+    <!-- Menú lateral -->
+    <left>
+        <fx:include source="/com/therapistApp/view/panel/SideMenu.fxml" />
+    </left>
+
+    <!-- Contenedor central -->
+    <center>
+        <StackPane fx:id="contentPane" />
+    </center>
+
+</BorderPane>

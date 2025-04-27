@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.therapistApp.controller.TopMenuController"
+      style="-fx-background-color: #2D2D2D;"
+      spacing="10" alignment="CENTER_LEFT">
+
+    <padding>
+        <Insets top="10" bottom="10" left="10" right="10"/>
+    </padding>
+
+    <Label fx:id="titleLabel" text="Mi Aplicación de Terapia"
+           style="-fx-text-fill: white; -fx-font-size: 18px;"/>
+
+</HBox>

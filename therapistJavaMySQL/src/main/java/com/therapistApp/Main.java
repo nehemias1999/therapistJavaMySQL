@@ -1,14 +1,19 @@
 package com.therapistApp;
 
-import com.therapistApp.controller.Controller;
-import com.therapistApp.exception.ValidationException;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import com.therapistApp.controller.Controller2;
 
-import java.sql.SQLException;
+public class Main extends Application {
 
-public class Main {
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-    public static void main(String[] args) throws ValidationException, SQLException {
-        new Controller();
+    @Override
+    public void start(Stage stage) throws Exception {
+        Controller2 controller = new Controller2();
+        controller.init(stage);
     }
 
 }
